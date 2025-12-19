@@ -1,5 +1,6 @@
 import { randomUUID } from "crypto";
 import config from "../config.js";
+import { Structs } from "node-napcat-ts";
 
 export const pendingRequests = new Map();
 
