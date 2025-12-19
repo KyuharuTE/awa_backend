@@ -3,7 +3,7 @@ import axios from "axios";
 
 function get_baseurl() {
 	if (os.platform() == "linux") {
-		return "ws://127.0.0.1:6983";
+		return "ws://127.0.0.1:3001";
 	} else {
 		return "wss://nchttp.afrit.cn/ws/";
 	}
