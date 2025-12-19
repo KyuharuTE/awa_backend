@@ -17,6 +17,7 @@ await napcat.connect();
 logger.debug("Napcat connected successfully.");
 
 export const app = express();
+app.use(express.json());
 
 const wsClients = new Map();
 const wsMessageListeners = [];
