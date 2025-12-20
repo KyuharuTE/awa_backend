@@ -103,8 +103,6 @@ export async function run({ onWsMessage, napcat, wsClients }) {
 
 				return;
 			}
-		} catch (error) {
-			logger.warn(error);
-		}
+		} catch (error) {}
 	});
 }
