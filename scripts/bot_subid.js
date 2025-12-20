@@ -2004,34 +2004,6 @@ const hd = {
 	ssover: 12,
 	client_ver: 8001,
 };
-const apklist = {
-	[Platform.Android]: mobile.concat(mobile_old),
-	[Platform.aPad]: mobile.concat(mobile_old).map((apk) => {
-		return {
-			...apk,
-			subid: apk?.apad_subid || apk.subid,
-			display: apk?.apad_subid ? "aPad" : apk.display,
-		};
-	}),
-	[Platform.Watch]: watch,
-	[Platform.iMac]: { ...hd },
-	[Platform.iPad]: {
-		...mobile[0],
-		id: "com.tencent.mqq",
-		subid: 537155074,
-		sign: hd.sign,
-		name: "8.9.50.611",
-		version: "8.9.50.611",
-		ver: "8.9.50",
-		sdkver: "6.0.0.2535",
-		qua: "",
-		display: "iPad",
-		ssover: 19,
-		fekit_ver: "",
-	},
-	[Platform.Tim]: tim,
-	[Platform.Custom]: [],
-};
 
 export function checkMyVersion(subid) {
 	/**
