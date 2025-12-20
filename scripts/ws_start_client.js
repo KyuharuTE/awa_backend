@@ -30,7 +30,7 @@ export async function run({ onWsMessage, napcat, wsClients }) {
 					"?g_tk=" +
 					bkn +
 					"&skey_type=2&uin=" +
-					bkn +
+					uin +
 					"&report_id=&entry_type=";
 
 				const headers = {
@@ -69,7 +69,7 @@ export async function run({ onWsMessage, napcat, wsClients }) {
 					validateStatus: () => true,
 				});
 
-				const re = JSON.parse(res.data);
+				const re = res.data;
 
 				if (re.retcode !== "0") {
 					await napcat.send_group_msg({
