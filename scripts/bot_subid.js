@@ -1,5 +1,6 @@
 import { logger, Structs } from "node-napcat-ts";
 import { defineScript } from "../script_api.js";
+import { getClientByToken } from "../data_base.js";
 
 const linux = [
 	{
@@ -2194,5 +2195,17 @@ export default defineScript(async (ctx) => {
 		} catch (error) {
 			logger.warn(error);
 		}
+	});
+
+	ctx.app.get("/get_subid", async (req, res) => {
+		try {
+			const token = req.query.token;
+			const client = await getClientByToken(token);
+			if (!client) {
+				return res.status(403).send({ msg: "403" });
+			}
+
+			res.send({ linux, macos, windows, mobile_old, mobile, tim, watch });
+		} catch (error) {}
 	});
 });
