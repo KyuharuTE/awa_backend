@@ -17,6 +17,14 @@ export function get_baseip() {
 	}
 }
 
+export function get_basehost() {
+	if (os.platform() == "linux") {
+		return "awa.afrit.cn";
+	} else {
+		return "127.0.0.1:6155";
+	}
+}
+
 export default {
 	bot: {
 		baseUrl: get_baseurl(),
