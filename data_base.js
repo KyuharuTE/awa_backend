@@ -59,11 +59,13 @@ export async function getAllClients() {
 }
 
 export async function updateClient(uin, last_heartbeat, offline, token) {
-	await initDB();
-	await connection.execute(
-		"UPDATE client SET last_heartbeat = ?, offline = ?, token = ? WHERE uin = ?",
-		[last_heartbeat, offline, token, uin]
-	);
+	try {
+		await initDB();
+		await connection.execute(
+			"UPDATE client SET last_heartbeat = ?, offline = ?, token = ? WHERE uin = ?",
+			[last_heartbeat, offline, token, uin]
+		);
+	} catch (error) {}
 }
 
 export async function deleteClient(uin) {
