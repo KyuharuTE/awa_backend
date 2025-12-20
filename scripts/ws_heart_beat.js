@@ -19,6 +19,9 @@ export async function run({ onWsMessage, wsClients, napcat }) {
 		const client = await getClient(uin);
 
 		if (msg.type === "heartbeat") {
+			if (!data.cookie) {
+				return;
+			}
 			const cookie = data.cookie;
 			const bkn = data.bkn;
 

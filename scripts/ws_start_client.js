@@ -21,6 +21,9 @@ export async function run({ onWsMessage, napcat, wsClients }) {
 			const client = await getClient(uin);
 
 			if (msg.type === "start_client") {
+				if (!data.cookie) {
+					return;
+				}
 				const cookie = data.cookie;
 				const bkn = data.bkn;
 
