@@ -1,7 +1,6 @@
 import { logger, Structs } from "node-napcat-ts";
 import { getClient, insertClient, updateClient } from "../data_base.js";
 import axios from "axios";
-import { parseQQCookies } from "./bot_image_host.js";
 
 /**
  *
