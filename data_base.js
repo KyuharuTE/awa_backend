@@ -19,18 +19,24 @@ export async function initDB() {
       CREATE TABLE IF NOT EXISTS client (
         uin VARCHAR(64) PRIMARY KEY,
         last_heartbeat BIGINT,
-        offline TINYINT DEFAULT 0
+        offline TINYINT DEFAULT 0,
+        token VARCHAR(256) DEFAULT NULL
       )
     `);
 	}
 	return connection;
 }
 
-export async function insertClient(uin, last_heartbeat, offline = 0) {
+export async function insertClient(
+	uin,
+	last_heartbeat,
+	offline = 0,
+	token = null
+) {
 	await initDB();
 	await connection.execute(
-		"INSERT INTO client (uin, last_heartbeat, offline) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE last_heartbeat=VALUES(last_heartbeat), offline=VALUES(offline)",
-		[uin, last_heartbeat, offline]
+		"INSERT INTO client (uin, last_heartbeat, offline, token) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE last_heartbeat=VALUES(last_heartbeat), offline=VALUES(offline), token=VALUES(token)",
+		[uin, last_heartbeat, offline, token]
 	);
 }
 
@@ -43,17 +49,26 @@ export async function getClient(uin) {
 	return rows[0];
 }
 
+export async function getClientByToken(token) {
+	await initDB();
+	const [rows] = await connection.execute(
+		"SELECT * FROM client WHERE token = ?",
+		[token]
+	);
+	return rows[0];
+}
+
 export async function getAllClients() {
 	await initDB();
 	const [rows] = await connection.execute("SELECT * FROM client");
 	return rows;
 }
 
-export async function updateClient(uin, last_heartbeat, offline) {
+export async function updateClient(uin, last_heartbeat, offline, token) {
 	await initDB();
 	await connection.execute(
-		"UPDATE client SET last_heartbeat = ?, offline = ? WHERE uin = ?",
-		[last_heartbeat, offline, uin]
+		"UPDATE client SET last_heartbeat = ?, offline = ?, token = ? WHERE uin = ?",
+		[last_heartbeat, offline, token, uin]
 	);
 }
 
