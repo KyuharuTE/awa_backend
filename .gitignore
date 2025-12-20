@@ -3,3 +3,4 @@ node_modules/
 appid.json
 data.json
 cloud_preset_uuid.txt
+pnpm-lock.yaml
