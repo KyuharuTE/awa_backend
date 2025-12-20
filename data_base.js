@@ -15,14 +15,6 @@ let connection = null;
 export async function initDB() {
 	if (!connection) {
 		connection = await mysql.createConnection(dbConfig);
-		await connection.execute(`
-      CREATE TABLE IF NOT EXISTS client (
-        uin VARCHAR(64) PRIMARY KEY,
-        last_heartbeat BIGINT,
-        offline TINYINT DEFAULT 0,
-        token VARCHAR(256) DEFAULT NULL
-      )
-    `);
 	}
 	return connection;
 }
