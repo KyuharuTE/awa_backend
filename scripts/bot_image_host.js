@@ -5,7 +5,7 @@ import FormData from "form-data";
 import { randomUUID } from "crypto";
 import config from "../config.js";
 
-function parseQQCookies(cookieStr) {
+export function parseQQCookies(cookieStr) {
 	const get = (name) => {
 		const match = cookieStr.match(new RegExp(`${name}=([^;]+)`));
 		return match ? match[1] : "";
