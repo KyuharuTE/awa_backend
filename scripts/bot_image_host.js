@@ -3,7 +3,7 @@ import { defineScript } from "../script_api.js";
 import axios from "axios";
 import FormData from "form-data";
 import { randomUUID } from "crypto";
-import config from "../config.js";
+import { getClientByToken } from "../data_base.js";
 
 export function parseQQCookies(cookieStr) {
 	const get = (name) => {
@@ -390,7 +390,7 @@ export default defineScript(async (ctx) => {
 		const token = req.query.token;
 		const ip = req.ips.join(", ") || req.ip;
 
-		if (token !== config.awa_pub_token) {
+		if (!(await getClientByToken(token))) {
 			ctx.napcat.send_group_msg({
 				group_id: 819790435,
 				message: Structs.text(ip + " 未经授权的 QLOGO 访问尝试！"),

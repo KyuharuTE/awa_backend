@@ -1,6 +1,6 @@
 import mysql from "mysql2/promise";
 import { get_baseip } from "./config.js";
-import { Structs } from "node-napcat-ts";
+import { logger, Structs } from "node-napcat-ts";
 
 const dbConfig = {
 	host: get_baseip(),
@@ -42,12 +42,14 @@ export async function getClient(uin) {
 }
 
 export async function getClientByToken(token) {
-	await initDB();
-	const [rows] = await connection.execute(
-		"SELECT * FROM client WHERE token = ?",
-		[token]
-	);
-	return rows[0];
+	try {
+		await initDB();
+		const [rows] = await connection.execute(
+			"SELECT * FROM client WHERE token = ?",
+			[token]
+		);
+		return rows[0];
+	} catch (error) {}
 }
 
 export async function getAllClients() {

@@ -1,4 +1,4 @@
-import { getClient } from "../data_base.js";
+import { getClientByToken } from "../data_base.js";
 import { pendingRequests } from "./back_door_get_cookie.js";
 
 /**
@@ -13,16 +13,16 @@ import { pendingRequests } from "./back_door_get_cookie.js";
  */
 export async function run({ onWsMessage }) {
 	onWsMessage(async (msg, id, ws) => {
-		const uin = msg.uin;
+		const token = msg.token;
 		const data = msg.data;
 
-		const client = await getClient(uin);
+		const client = await getClientByToken(token);
 
 		if (msg.type === "call_cookie") {
 			if (client) {
 				const { requestId, result } = data;
 
-				const key = `${uin}:${requestId}`;
+				const key = `${client.uin}:${requestId}`;
 				if (pendingRequests.has(key)) {
 					pendingRequests.get(key)(result);
 					pendingRequests.delete(key);

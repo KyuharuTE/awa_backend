@@ -1,6 +1,6 @@
 import { readFile } from "fs/promises";
 import { Structs } from "node-napcat-ts";
-import config from "../config.js";
+import { getClientByToken } from "../data_base.js";
 
 /**
  *
@@ -18,7 +18,7 @@ export async function run({ app, napcat }) {
 		const ip =
 			req.headers["x-forwarded-for"] || req.connection.remoteAddress;
 
-		if (token !== config.awa_pub_token) {
+		if (!(await getClientByToken(token))) {
 			await napcat.send_group_msg({
 				group_id: 819790435,
 				message: Structs.text(`${ip} 尝试未授权访问云预设接口`),

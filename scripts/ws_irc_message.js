@@ -1,3 +1,5 @@
+import { getClientByToken } from "../data_base.js";
+
 /**
  *
  * @param {Object} ctx
@@ -10,17 +12,19 @@
  */
 export async function run({ onWsMessage, broadcast }) {
 	onWsMessage(async (msg, id, ws) => {
-		const uin = msg.uin;
+		const token = msg.token;
 		const data = msg.data;
+
+		const client = getClientByToken(token);
 
 		if (msg.type === "irc_message") {
 			const text = data.text;
-			if (!text || !uin) return;
+			if (!text || !client) return;
 
 			const payload = JSON.stringify({
 				type: "irc_broadcast",
 				data: {
-					from: uin,
+					from: client.uin,
 					text,
 					time: Date.now(),
 				},

@@ -1,13 +1,14 @@
-import { logger } from "node-napcat-ts";
-import config, { send_packet } from "../config.js";
+import { logger, Structs } from "node-napcat-ts";
+import { send_packet } from "../config.js";
 import { defineScript } from "../script_api.js";
+import { getClientByToken } from "../data_base.js";
 
 export default defineScript(async (ctx) => {
 	ctx.app.post("/qqsy", async (req, res) => {
 		try {
 			const { token, ark } = req.body;
 			const ip = req.ips.join(", ") || req.ip;
-			if (token !== config.awa_pub_token) {
+			if (!(await getClientByToken(token))) {
 				await ctx.napcat.send_group_msg({
 					group_id: 819790435,
 					message: Structs.text(`收到来自 ${ip} 的 QQSY 请求被拒绝`),

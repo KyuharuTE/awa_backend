@@ -1,6 +1,7 @@
 import { Structs } from "node-napcat-ts";
 import config, { send_packet } from "../config.js";
 import axios from "axios";
+import { getClientByToken } from "../data_base.js";
 
 const deepGet = (obj, path, def = null) => {
 	try {
@@ -88,7 +89,7 @@ export async function run({ app, napcat }) {
 		const ip =
 			req.headers["x-forwarded-for"] || req.connection.remoteAddress;
 
-		if (token !== config.awa_pub_token) {
+		if (!(await getClientByToken(token))) {
 			await napcat.send_group_msg({
 				group_id: 819790435,
 				message: Structs.text(`${ip} 尝试未授权访问获取应用信息接口`),
