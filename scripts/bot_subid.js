@@ -912,7 +912,6 @@ const mobile = [
 		device_type: -1,
 		bitmap: 0x08f7ff7c,
 		client_ver: 8001,
-		login_platform: NTLoginPlatform.Android,
 		...shortInfo,
 	};
 });
@@ -1684,7 +1683,6 @@ const mobile_old = [
 		device_type: -1,
 		bitmap: 0x08f7ff7c,
 		client_ver: 8001,
-		login_platform: NTLoginPlatform.Android,
 		...shortInfo,
 	};
 });
@@ -1888,7 +1886,6 @@ const tim = [
 		device_type: -1,
 		bitmap: 150470524,
 		client_ver: 8001,
-		login_platform: NTLoginPlatform.Android,
 		...shortInfo,
 	};
 });
@@ -1981,7 +1978,6 @@ const watch = [
 		device_type: 8,
 		bitmap: 150470524,
 		client_ver: 8001,
-		login_platform: NTLoginPlatform.Android,
 		...shortInfo,
 	};
 });
@@ -2007,7 +2003,6 @@ const hd = {
 	qua: "",
 	ssover: 12,
 	client_ver: 8001,
-	login_platform: NTLoginPlatform.Mac,
 };
 const apklist = {
 	[Platform.Android]: mobile.concat(mobile_old),
@@ -2033,7 +2028,6 @@ const apklist = {
 		display: "iPad",
 		ssover: 19,
 		fekit_ver: "",
-		login_platform: NTLoginPlatform.iPad,
 	},
 	[Platform.Tim]: tim,
 	[Platform.Custom]: [],
