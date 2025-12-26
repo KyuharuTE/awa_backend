@@ -640,6 +640,19 @@ const mobile = [
 	// 每个版本不同的信息
 	{
 		name: "A9.2.50.ceb9b856",
+		version: "9.2.55",
+		ver: "9.2.55",
+		subid: 537333095,
+		apad_subid: 537333095,
+		qua: "V1_AND_SQ_9.2.50_12670_YYB_D",
+		channel: "GuanWang",
+		sdkver: "6.0.0.2591",
+		buildtime: 1762849776,
+		ssover: 22,
+		fekit_ver: "8.503.945",
+	},
+	{
+		name: "A9.2.50.ceb9b856",
 		version: "9.2.50.32575",
 		ver: "9.2.50",
 		subid: 537330095,
