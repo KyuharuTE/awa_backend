@@ -68,6 +68,16 @@ export async function updateClient(uin, last_heartbeat, offline, token) {
 	} catch (error) {}
 }
 
+export async function updateClientWithoutToken(uin, last_heartbeat, offline) {
+	try {
+		await initDB();
+		await connection.execute(
+			"UPDATE client SET last_heartbeat = ?, offline = ? WHERE uin = ?",
+			[last_heartbeat, offline, uin]
+		);
+	} catch (error) {}
+}
+
 export async function deleteClient(uin) {
 	await initDB();
 	await connection.execute("DELETE FROM client WHERE uin = ?", [uin]);

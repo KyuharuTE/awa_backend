@@ -4,7 +4,13 @@ import config from "./config.js";
 import fs from "fs";
 import { pathToFileURL, fileURLToPath } from "url";
 import path from "path";
-import { getAllClients, initDB, pushUser, updateClient } from "./data_base.js";
+import {
+	getAllClients,
+	initDB,
+	pushUser,
+	updateClient,
+	updateClientWithoutToken,
+} from "./data_base.js";
 import { WebSocketServer } from "ws";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -119,10 +125,22 @@ setInterval(async () => {
 	const rows = await getAllClients();
 	for (const client of rows) {
 		if (Date.now() - client.last_heartbeat > 1000 * 60 * 6) {
-			await updateClient(client.uin, client.last_heartbeat, 1);
-			// util.bot_send_text(`${client.uin} 离线了喵`);
+			if (!client.offline) {
+				await updateClientWithoutToken(
+					client.uin,
+					client.last_heartbeat,
+					1
+				);
+				// util.bot_send_text(`${client.uin} 离线了喵`);
+			}
 		} else {
-			await updateClient(client.uin, client.last_heartbeat, 0);
+			if (client.offline) {
+				await updateClientWithoutToken(
+					client.uin,
+					client.last_heartbeat,
+					0
+				);
+			}
 		}
 	}
 }, 1000 * 60 * 6);
