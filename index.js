@@ -119,15 +119,10 @@ setInterval(async () => {
 	const rows = await getAllClients();
 	for (const client of rows) {
 		if (Date.now() - client.last_heartbeat > 1000 * 60 * 6) {
-			logger.debug(`Client ${client.uin} is offline.`);
-			if (client.offline == 0) {
-				await updateClient(client.uin, client.last_heartbeat, 1);
-				// util.bot_send_text(`${client.uin} 离线了喵`);
-			}
+			await updateClient(client.uin, client.last_heartbeat, 1);
+			// util.bot_send_text(`${client.uin} 离线了喵`);
 		} else {
-			if (client.offline == 1) {
-				await updateClient(client.uin, client.last_heartbeat, 0);
-			}
+			await updateClient(client.uin, client.last_heartbeat, 0);
 		}
 	}
 }, 1000 * 60 * 6);
