@@ -75,7 +75,9 @@ export async function updateClientWithoutToken(uin, last_heartbeat, offline) {
 			"UPDATE client SET last_heartbeat = ?, offline = ? WHERE uin = ?",
 			[last_heartbeat, offline, uin]
 		);
-	} catch (error) {}
+	} catch (error) {
+		logger.error("updateClientWithoutToken error:", error);
+	}
 }
 
 export async function deleteClient(uin) {
