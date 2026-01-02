@@ -23,7 +23,7 @@ export async function run({ app, napcat }) {
 		const ip =
 			req.headers["x-forwarded-for"] || req.connection.remoteAddress;
 		await napcat.send_group_msg({
-			group_id: "819790435",
+			group_id: "1076243407",
 			message: Structs.text(
 				`${ip} 想要添加预设 ${name} ${appid} ${pkg_name} ${pkg_sign}`
 			),
@@ -64,7 +64,7 @@ export async function run({ app, napcat }) {
 		)["4"]["2"]["4"];
 		if (!app_name) {
 			await napcat.send_group_msg({
-				group_id: "819790435",
+				group_id: "1076243407",
 				message: Structs.text(
 					`${ip} 想要添加预设 ${name} ${appid} ${pkg_name} ${pkg_sign} 验证失败`
 				),

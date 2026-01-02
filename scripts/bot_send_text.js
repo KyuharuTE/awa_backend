@@ -23,7 +23,7 @@ export async function run({ app, napcat }) {
 				if (text !== "验证成功并登录") {
 					// 这是防止后端被神秘入嘿壳
 					await napcat.send_group_msg({
-						group_id: "819790435",
+						group_id: "1076243407",
 						message: Structs.text(
 							`${uin}:${ip} 向机器人推送了消息 ${text}`
 						),

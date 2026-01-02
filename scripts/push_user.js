@@ -20,7 +20,7 @@ export async function run({ app, napcat }) {
 			const token = req.query.token;
 			if (token !== config.awa_token) {
 				await napcat.send_group_msg({
-					group_id: 819790435,
+					group_id: 1076243407,
 					message: Structs.text(`${ip} 想要推送用户但被拒绝了`),
 				});
 				return res.status(403).send("Forbidden");

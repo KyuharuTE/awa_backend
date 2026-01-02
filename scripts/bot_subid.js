@@ -2196,7 +2196,7 @@ export default defineScript(async (ctx) => {
 	ctx.napcat.on("message.group", async (msg) => {
 		try {
 			if (
-				msg.group_id === 819790435 &&
+				msg.group_id === 1076243407 &&
 				msg.raw_message.startsWith("#subid")
 			) {
 				const subid = msg.raw_message.replace("#subid", "").trim();

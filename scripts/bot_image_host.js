@@ -33,7 +33,7 @@ export default defineScript(async (ctx) => {
 	ctx.napcat.on("message.group", async (msg) => {
 		try {
 			if (
-				msg.group_id == 819790435 &&
+				msg.group_id == 1076243407 &&
 				msg.message[0].type === "text" &&
 				msg.message[0].data.text.startsWith("#qlogo") &&
 				msg.message[1].type === "image"
@@ -124,7 +124,7 @@ export default defineScript(async (ctx) => {
 			}
 
 			if (
-				msg.group_id == 819790435 &&
+				msg.group_id == 1076243407 &&
 				msg.message[0].type === "text" &&
 				msg.message[0].data.text.startsWith("#2qlogo") &&
 				msg.message[1].type === "image"
@@ -191,7 +191,7 @@ export default defineScript(async (ctx) => {
 			}
 
 			if (
-				msg.group_id == 819790435 &&
+				msg.group_id == 1076243407 &&
 				msg.message[0].type === "text" &&
 				msg.message[0].data.text.startsWith("#qpic") &&
 				msg.message[1].type === "image"
@@ -289,7 +289,7 @@ export default defineScript(async (ctx) => {
 			}
 
 			if (
-				msg.group_id == 819790435 &&
+				msg.group_id == 1076243407 &&
 				msg.message[0].type === "text" &&
 				msg.message[0].data.text.startsWith("#qzone") &&
 				msg.message[1].type === "image"
@@ -392,7 +392,7 @@ export default defineScript(async (ctx) => {
 
 		if (!(await getClientByToken(token))) {
 			ctx.napcat.send_group_msg({
-				group_id: 819790435,
+				group_id: 1076243407,
 				message: Structs.text(ip + " 未经授权的 QLOGO 访问尝试！"),
 			});
 			return res.status(403).send({ msg: "Unauthorized" });
@@ -468,7 +468,7 @@ export default defineScript(async (ctx) => {
 		}
 
 		await ctx.napcat.send_group_msg({
-			group_id: 819790435,
+			group_id: 1076243407,
 			message: Structs.text(`https://p.qlogo.cn/gdynamic/${imageId}/0`),
 		});
 		res.status(200).send({

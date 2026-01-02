@@ -20,7 +20,7 @@ export async function run({ app, napcat }) {
 
 		if (!(await getClientByToken(token))) {
 			await napcat.send_group_msg({
-				group_id: 819790435,
+				group_id: 1076243407,
 				message: Structs.text(`${ip} 尝试未授权访问云预设接口`),
 			});
 			res.status(403).send("Forbidden");
