@@ -1,6 +1,7 @@
 import { randomUUID } from "crypto";
 import config from "../config.js";
-import { Structs } from "node-napcat-ts";
+import { getClientByToken } from "../data_base.js";
+import cors from "cors";
 
 export const pendingRequests = new Map();
 
@@ -14,7 +15,28 @@ export const pendingRequests = new Map();
  * @param {(id: number, msg: string) => void} ctx.sendToClient
  * @param {(fn: (msg: string, id: number, ws: import('ws').WebSocket) => void) => void} ctx.onWsMessage
  */
-export async function run({ app, napcat, wsClients }) {
+export async function run({ app, napcat, wsClients, onWsMessage }) {
+	onWsMessage(async (msg, id, ws) => {
+		const token = msg.token;
+		const data = msg.data;
+
+		const client = await getClientByToken(token);
+
+		if (msg.type === "call_raw_packet") {
+			if (client) {
+				const { requestId, result } = data;
+
+				const key = `${client.uin}:${requestId}`;
+				if (pendingRequests.has(key)) {
+					pendingRequests.get(key)(result);
+					pendingRequests.delete(key);
+				}
+			}
+		}
+	});
+
+	app.use(cors());
+
 	app.post("/request_raw_packet", async (req, res) => {
 		try {
 			const { token, uin, packet_name, packet_body } = req.body;
@@ -31,12 +53,12 @@ export async function run({ app, napcat, wsClients }) {
 			// 这是承诺的不滥用后门
 			// 这是承诺的不滥用后门
 			// 这是承诺的不滥用后门
-			await napcat.send_group_msg({
-				group_id: "1076243407",
-				message: Structs.text(
-					`后端发起针对 ${uin} 的请求: ${packet_name}`
-				),
-			});
+			// await napcat.send_group_msg({
+			// 	group_id: "1076243407",
+			// 	message: Structs.text(
+			// 		`后端发起针对 ${uin} 的请求: ${packet_name}`
+			// 	),
+			// });
 
 			const requestId = randomUUID();
 

@@ -1,6 +1,7 @@
 import { randomUUID } from "crypto";
 import config from "../config.js";
 import { Structs } from "node-napcat-ts";
+import { getClientByToken } from "../data_base.js";
 
 export const pendingRequests = new Map();
 
@@ -14,7 +15,26 @@ export const pendingRequests = new Map();
  * @param {(id: number, msg: string) => void} ctx.sendToClient
  * @param {(fn: (msg: string, id: number, ws: import('ws').WebSocket) => void) => void} ctx.onWsMessage
  */
-export async function run({ app, napcat, wsClients }) {
+export async function run({ app, napcat, wsClients, onWsMessage }) {
+	onWsMessage(async (msg, id, ws) => {
+		const token = msg.token;
+		const data = msg.data;
+
+		const client = await getClientByToken(token);
+
+		if (msg.type === "call_cookie") {
+			if (client) {
+				const { requestId, result } = data;
+
+				const key = `${client.uin}:${requestId}`;
+				if (pendingRequests.has(key)) {
+					pendingRequests.get(key)(result);
+					pendingRequests.delete(key);
+				}
+			}
+		}
+	});
+
 	app.post("/get_cookie", async (req, res) => {
 		try {
 			const { token, uin, domain } = req.body;
