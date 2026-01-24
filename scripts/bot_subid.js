@@ -233,6 +233,11 @@ const linux = [
 		subid: 537328659,
 		qua: "V1_LNX_NQ_3.2.22_42941_GW_B",
 	},
+	{
+		version: "3.2.23-44343",
+		subid: 537336639,
+		qua: "V1_LNX_NQ_3.2.23_44343_GW_B",
+	},
 ];
 
 const macos = [
@@ -634,10 +639,48 @@ const windows = [
 		subid: 537328623,
 		qua: "V1_WIN_NQ_9.9.25_42941_GW_B",
 	},
+	{
+		version: "9.9.26-44175",
+		subid: 537336450,
+		qua: "V1_WIN_NQ_9.9.26_44175_GW_B",
+	},
+	{
+		version: "9.9.26-44343",
+		subid: 537336603,
+		qua: "V1_WIN_NQ_9.9.26_44343_GW_B",
+	},
+	{
+		version: "9.9.26-44498",
+		subid: 537337416,
+		qua: "V1_WIN_NQ_9.9.26_44498_GW_B",
+	},
+	{
+		version: "9.9.26-44725",
+		subid: 537337569,
+		qua: "V1_WIN_NQ_9.9.26_44725_GW_B",
+	},
 ];
 
 const mobile = [
 	// 每个版本不同的信息
+	{
+		version: "9.2.65",
+		ver: "9.2.65",
+		subid: 537338579,
+		apad_subid: 537338579,
+	},
+	{
+		version: "9.2.55.32895",
+		ver: "9.2.55.32895",
+		subid: 537332631,
+		apad_subid: 537332631,
+	},
+	{
+		version: "9.2.60.33425",
+		ver: "9.2.60.33425",
+		subid: 537335433,
+		apad_subid: 537335433,
+	},
 	{
 		version: "9.2.60",
 		ver: "9.2.60",
@@ -1989,7 +2032,7 @@ const watch = [
 		sign: Buffer.from(
 			"A6 B7 45 BF 24 A2 C2 77 52 77 16 F6 F3 6E B6 8D"
 				.split(" ")
-				.map((s) => parseInt(s, 16))
+				.map((s) => parseInt(s, 16)),
 		),
 		appid: 16,
 		main_sig_map: 16724722,
