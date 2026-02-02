@@ -1,5 +1,5 @@
 import { readFile, writeFile } from "fs/promises";
-import { Structs } from "node-napcat-ts";
+import { logger, Structs } from "node-napcat-ts";
 import { send_packet } from "../config.js";
 
 /**
@@ -13,6 +13,46 @@ import { send_packet } from "../config.js";
  * @param {(fn: (msg: string, id: number, ws: import('ws').WebSocket) => void) => void} ctx.onWsMessage
  */
 export async function run({ app, napcat }) {
+	napcat.on("message.group.normal", async (msg) => {
+		try {
+			if (
+				msg.message[0].type === "text" &&
+				msg.message[0].data.text.startsWith("添加单appid") &&
+				msg.group_id == 1076243407
+			) {
+				const appid = msg.message[0].data.text
+					.replace("添加单appid", "")
+					.split(" ")[0];
+				const name = msg.message[0].data.text
+					.replace("添加单appid", "")
+					.split(" ")[1];
+
+				const json_string = await readFile("./appid.json", "utf-8");
+				const json = JSON.parse(json_string);
+
+				json.push({
+					name,
+					appid,
+					pkg_name: "无",
+					pkg_sign: "无",
+				});
+
+				await writeFile(
+					"./appid.json",
+					JSON.stringify(json, null, 2),
+					"utf-8",
+				);
+
+				await napcat.send_group_msg({
+					group_id: 1076243407,
+					message: [Structs.text("添加成功")],
+				});
+			}
+		} catch (error) {
+			logger.warn(error);
+		}
+	});
+
 	app.get("/appid/add", async (req, res) => {
 		const { name, appid, pkg_name, pkg_sign } = req.query;
 		if (!name || !appid || !pkg_name || !pkg_sign) {
@@ -25,7 +65,7 @@ export async function run({ app, napcat }) {
 		await napcat.send_group_msg({
 			group_id: "1076243407",
 			message: Structs.text(
-				`${ip} 想要添加预设 ${name} ${appid} ${pkg_name} ${pkg_sign}`
+				`${ip} 想要添加预设 ${name} ${appid} ${pkg_name} ${pkg_sign}`,
 			),
 		});
 
@@ -66,7 +106,7 @@ export async function run({ app, napcat }) {
 			await napcat.send_group_msg({
 				group_id: "1076243407",
 				message: Structs.text(
-					`${ip} 想要添加预设 ${name} ${appid} ${pkg_name} ${pkg_sign} 验证失败`
+					`${ip} 想要添加预设 ${name} ${appid} ${pkg_name} ${pkg_sign} 验证失败`,
 				),
 			});
 			return res.send("验证失败");
