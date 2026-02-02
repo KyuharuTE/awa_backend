@@ -664,8 +664,14 @@ const windows = [
 const mobile = [
 	// 每个版本不同的信息
 	{
-		version: "9.2.65",
-		ver: "9.2.65",
+		version: "9.2.65.33850",
+		ver: "9.2.65.33850",
+		subid: 537339041,
+		apad_subid: 537339041,
+	},
+	{
+		version: "9.2.65.33745",
+		ver: "9.2.65.33745",
 		subid: 537338579,
 		apad_subid: 537338579,
 	},
@@ -682,14 +688,14 @@ const mobile = [
 		apad_subid: 537335433,
 	},
 	{
-		version: "9.2.60",
-		ver: "9.2.60",
+		version: "9.2.60.33320",
+		ver: "9.2.60.33320",
 		subid: 537334969,
 		apad_subid: 537334969,
 	},
 	{
 		name: "A9.2.50.ceb9b856",
-		version: "9.2.55",
+		version: "9.2.55.33000",
 		ver: "9.2.55",
 		subid: 537333095,
 		apad_subid: 537333095,
