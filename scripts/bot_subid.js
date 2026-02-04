@@ -361,6 +361,11 @@ const macos = [
 		subid: 537328648,
 		qua: "V1_MAC_NQ_6.9.86_42941_GW_B",
 	},
+	{
+		version: "6.9.88-44725",
+		subid: 537337594,
+		qua: "V1_MAC_NQ_6.9.88_44725_GW_B",
+	},
 ];
 
 const windows = [
@@ -658,6 +663,11 @@ const windows = [
 		version: "9.9.26-44725",
 		subid: 537337569,
 		qua: "V1_WIN_NQ_9.9.26_44725_GW_B",
+	},
+	{
+		version: "9.9.27-45627",
+		subid: 537340060,
+		qua: "V1_WIN_NQ_9.9.27_45627_GW_B",
 	},
 ];
 
