@@ -1,3 +1,4 @@
+import { logger } from "node-napcat-ts";
 import { getClientByToken } from "../data_base.js";
 
 /**
@@ -24,7 +25,7 @@ export async function run({ onWsMessage, broadcast }) {
 			const payload = JSON.stringify({
 				type: "irc_broadcast",
 				data: {
-					from: client.uin,
+					from: msg.uin,
 					text,
 					time: Date.now(),
 				},
