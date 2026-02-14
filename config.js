@@ -13,7 +13,7 @@ export function get_baseip() {
 	if (os.platform() == "linux") {
 		return "127.0.0.1";
 	} else {
-		return "38.244.14.188";
+		return "38.22.235.102";
 	}
 }
 
