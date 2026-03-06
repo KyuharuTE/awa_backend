@@ -681,8 +681,19 @@ const windows = [
 	},
 ];
 
+windows.push({
+	version: "9.9.27-45758",
+	subid: 537345702,
+});
+
 const mobile = [
 	// 每个版本不同的信息
+	{
+		version: "9.2.70.34175",
+		ver: "9.2.70.34175",
+		subid: 537341245,
+		apad_subid: 537341245,
+	},
 	{
 		version: "9.2.66.33870",
 		ver: "9.2.66.33870",
