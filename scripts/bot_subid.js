@@ -715,6 +715,12 @@ const mobile = [
 		apad_subid: 537347831,
 	},
 	{
+		version: "IOS 9.2.75",
+		ver: "IOS 9.2.75",
+		subid: 537343715,
+		apad_subid: 537343715,
+	},
+	{
 		version: "9.2.75.34700",
 		ver: "9.2.75.34700",
 		subid: 537344683,
