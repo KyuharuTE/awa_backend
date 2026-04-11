@@ -15,7 +15,7 @@ export default defineScript((ctx) => {
 			client
 		) {
 			await ctx.napcat.send_group_msg({
-				group_id: 1076243407,
+				group_id: 1091816407,
 				message: [
 					Structs.customNode([Structs.text(data.url)]),
 					Structs.customNode([Structs.text(client.uin)]),
