@@ -253,6 +253,11 @@ const linux = [
 		subid: 537345994,
 		qua: "V1_LNX_NQ_3.2.26_46928_GW_B",
 	},
+	{
+		version: "3.2.27-47354",
+		subid: 537346908,
+		qua: "V1_LNX_NQ_3.2.27_47354_GW_B",
+	},
 ];
 
 const macos = [
@@ -385,6 +390,11 @@ const macos = [
 		version: "6.9.90-46494",
 		subid: 537345879,
 		qua: "V1_MAC_NQ_6.9.90_46494_GW_B",
+	},
+	{
+		version: "6.9.93-47354",
+		subid: 537346896,
+		qua: "V1_MAC_NQ_6.9.93_47354_GW_B",
 	},
 ];
 
@@ -703,6 +713,11 @@ const windows = [
 		version: "9.9.28-46928",
 		subid: 537345957,
 		qua: "V1_WIN_NQ_9.9.28_46928_GW_B",
+	},
+	{
+		version: "9.9.29-47354",
+		subid: 537346872,
+		qua: "V1_WIN_NQ_9.9.29_47354_GW_B",
 	},
 ];
 
