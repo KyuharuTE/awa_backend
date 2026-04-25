@@ -1,5 +1,6 @@
 import { logger } from "node-napcat-ts";
 import { defineScript } from "../script_api.js";
+import { getClientByToken } from "../data_base.js";
 
 export default defineScript((ctx) => {
 	ctx.onWsMessage(async (msg, id, ws) => {
