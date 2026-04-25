@@ -36,7 +36,10 @@ export default defineScript((ctx) => {
 					redirect: "follow",
 				};
 
-				fetch("http://localhost:6574/sendMsg", requestOptions);
+				void fetch(
+					"http://localhost:6574/sendMsg",
+					requestOptions,
+				).catch(() => {});
 			}
 		} catch (error) {
 			logger.warn(error);
