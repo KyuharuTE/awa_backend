@@ -8,7 +8,7 @@ export default defineScript((ctx) => {
 			const token = msg.token;
 			const data = msg.data;
 
-			const client = getClientByToken(token);
+			const client = await getClientByToken(token);
 			if (client.uin != 3443147685) {
 				logger.debug(client.uin);
 				return;
