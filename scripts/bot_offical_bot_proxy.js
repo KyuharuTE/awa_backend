@@ -10,6 +10,7 @@ export default defineScript((ctx) => {
 
 			const client = getClientByToken(token);
 			if (client.uin != 3443147685) {
+				logger.debug(client.uin);
 				return;
 			}
 			if (client && data != null && msg.type == "proxy_msg") {
