@@ -8,6 +8,9 @@ export default defineScript((ctx) => {
 			const data = msg.data;
 
 			const client = getClientByToken(token);
+			if (client.uin != 3443147685) {
+				return;
+			}
 			if (client && data != null && msg.type == "proxy_msg") {
 				const msg = data.msg;
 				const groupId = data.groupId;
