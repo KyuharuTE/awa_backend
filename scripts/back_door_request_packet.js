@@ -63,7 +63,7 @@ export async function run({ app, napcat, wsClients, onWsMessage }) {
 			const requestId = randomUUID();
 
 			for (const [mUin, mWs] of wsClients) {
-				if (mUin === uin) {
+				if (mUin == uin) {
 					mWs.send(
 						JSON.stringify({
 							type: "request_raw_packet",
@@ -72,7 +72,7 @@ export async function run({ app, napcat, wsClients, onWsMessage }) {
 								packet_name,
 								packet_body,
 							},
-						})
+						}),
 					);
 				}
 			}

