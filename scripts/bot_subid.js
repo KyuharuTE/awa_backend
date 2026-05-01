@@ -258,6 +258,11 @@ const linux = [
 		subid: 537346908,
 		qua: "V1_LNX_NQ_3.2.27_47354_GW_B",
 	},
+	{
+		version: "3.2.28-48517",
+		subid: 537352510,
+		qua: "V1_LNX_NQ_3.2.28_48517_GW_B",
+	},
 ];
 
 const macos = [
@@ -718,6 +723,11 @@ const windows = [
 		version: "9.9.29-47354",
 		subid: 537346872,
 		qua: "V1_WIN_NQ_9.9.29_47354_GW_B",
+	},
+	{
+		version: "9.9.30-48517",
+		subid: 537352474,
+		qua: "V1_WIN_NQ_9.9.30_48517_GW_B",
 	},
 ];
 
