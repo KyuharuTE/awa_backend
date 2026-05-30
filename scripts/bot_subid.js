@@ -729,6 +729,16 @@ const windows = [
 		subid: 537352474,
 		qua: "V1_WIN_NQ_9.9.30_48517_GW_B",
 	},
+	{
+		version: "9.9.30-48762",
+		subid: 537352525,
+		qua: "V1_WIN_NQ_9.9.30_48762_GW_B",
+	},
+	{
+		version: "9.9.31-49599",
+		subid: 537355779,
+		qua: "V1_WIN_NQ_9.9.31_49599_GW_B",
+	},
 ];
 
 const mobile = [
