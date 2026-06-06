@@ -263,6 +263,11 @@ const linux = [
 		subid: 537352510,
 		qua: "V1_LNX_NQ_3.2.28_48517_GW_B",
 	},
+	{
+		version: "3.2.29-49738",
+		subid: 537355867,
+		qua: "V1_LNX_NQ_3.2.29_49738_GW_B",
+	},
 ];
 
 const macos = [
@@ -739,10 +744,27 @@ const windows = [
 		subid: 537355779,
 		qua: "V1_WIN_NQ_9.9.31_49599_GW_B",
 	},
+	{
+		version: "9.9.31-49738",
+		subid: 537355830,
+		qua: "V1_WIN_NQ_9.9.31_49738_GW_B",
+	},
 ];
 
 const mobile = [
 	// 每个版本不同的信息
+	{
+		version: "9.3.0.36720",
+		ver: "9.3.0.36720",
+		subid: 537359793,
+		apad_subid: 537359793,
+	},
+	{
+		version: "9.2.95.36400",
+		ver: "9.2.95.36400",
+		subid: 537357471,
+		apad_subid: 537357471,
+	},
 	{
 		version: "9.2.90.35975",
 		ver: "9.2.90.35975",
