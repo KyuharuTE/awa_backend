@@ -157,6 +157,10 @@ async function runGit(args) {
 	});
 }
 
+function getGithubToken() {
+	return process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
+}
+
 async function hasStagedSubidChange() {
 	try {
 		await runGit(["diff", "--cached", "--quiet", "--", SUBID_DATA_GIT_PATH]);
@@ -186,8 +190,28 @@ async function commitAndPushSubid(version) {
 		"--",
 		SUBID_DATA_GIT_PATH,
 	]);
-	await runGit(["push"]);
+
+	const githubToken = getGithubToken();
+	if (githubToken) {
+		await runGit([
+			"-c",
+			`http.https://github.com/.extraheader=AUTHORIZATION: bearer ${githubToken}`,
+			"push",
+		]);
+	} else {
+		await runGit(["push"]);
+	}
+
 	return "pushed";
+}
+
+function formatSubidError(error) {
+	const message = error.stderr || error.message;
+	if (message.includes("could not read Username for 'https://github.com'")) {
+		return "GitHub 推送失败：运行 bot 的环境没有 GitHub 凭据，请给进程配置 GITHUB_TOKEN 或 GH_TOKEN";
+	}
+
+	return `SubId 操作失败：${error.message}`;
 }
 
 export function checkMyVersion(subid) {
@@ -419,7 +443,7 @@ export default defineScript(async (ctx) => {
 			logger.warn(error);
 			await ctx.napcat.send_group_msg({
 				group_id: msg.group_id,
-				message: Structs.text(`SubId 操作失败：${error.message}`),
+				message: Structs.text(formatSubidError(error)),
 			});
 		}
 	});
