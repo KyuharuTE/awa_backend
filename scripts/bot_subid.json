@@ -1,6 +1,10 @@
 {
 	"mobile": [
 		{
+			"version": "9.3.10.37675",
+			"subid": 537367461
+		},
+		{
 			"version": "9.2.26-Harmony",
 			"subid": 537362395
 		},
