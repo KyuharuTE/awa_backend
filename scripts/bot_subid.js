@@ -14,8 +14,8 @@ const REPO_ROOT = fileURLToPath(new URL("../", import.meta.url));
 const SUBID_GROUP_ID = 1076243407;
 const SUBID_SUBMIT_COMMAND = "/提交SubId";
 const SUBID_REFRESH_COMMAND = "/刷新SubId";
-const GIT_COMMIT_USER_NAME = "awa-subid-bot";
-const GIT_COMMIT_USER_EMAIL = "awa-subid-bot@users.noreply.github.com";
+const GIT_COMMIT_USER_NAME = "KyuharuTE";
+const GIT_COMMIT_USER_EMAIL = "kyuharu@qq.com";
 const subidData = JSON.parse(
 	readFileSync(SUBID_DATA_FILE, "utf8"),
 );
