@@ -161,6 +161,20 @@ function getGithubToken() {
 	return process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
 }
 
+function getGithubAuthHeader(token) {
+	const auth = Buffer.from(`x-access-token:${token}`).toString("base64");
+	return `AUTHORIZATION: basic ${auth}`;
+}
+
+function redactSecrets(message) {
+	return message
+		.replace(/gh[pousr]_[A-Za-z0-9_]+/g, "[REDACTED_TOKEN]")
+		.replace(
+			/(AUTHORIZATION:\s*(?:basic|bearer)\s+)[^\s'"]+/gi,
+			"$1[REDACTED_TOKEN]",
+		);
+}
+
 async function hasStagedSubidChange() {
 	try {
 		await runGit(["diff", "--cached", "--quiet", "--", SUBID_DATA_GIT_PATH]);
@@ -195,7 +209,7 @@ async function commitAndPushSubid(version) {
 	if (githubToken) {
 		await runGit([
 			"-c",
-			`http.https://github.com/.extraheader=AUTHORIZATION: bearer ${githubToken}`,
+			`http.https://github.com/.extraheader=${getGithubAuthHeader(githubToken)}`,
 			"push",
 		]);
 	} else {
@@ -206,12 +220,12 @@ async function commitAndPushSubid(version) {
 }
 
 function formatSubidError(error) {
-	const message = error.stderr || error.message;
+	const message = redactSecrets(error.stderr || error.message);
 	if (message.includes("could not read Username for 'https://github.com'")) {
-		return "GitHub 推送失败：运行 bot 的环境没有 GitHub 凭据，请给进程配置 GITHUB_TOKEN 或 GH_TOKEN";
+		return "GitHub 推送失败：运行 bot 的环境没有可用 GitHub 凭据，请检查 GITHUB_TOKEN/GH_TOKEN 是否有仓库写入权限";
 	}
 
-	return `SubId 操作失败：${error.message}`;
+	return `SubId 操作失败：${redactSecrets(error.message)}`;
 }
 
 export function checkMyVersion(subid) {
@@ -440,7 +454,7 @@ export default defineScript(async (ctx) => {
 				});
 			}
 		} catch (error) {
-			logger.warn(error);
+			logger.warn(formatSubidError(error));
 			await ctx.napcat.send_group_msg({
 				group_id: msg.group_id,
 				message: Structs.text(formatSubidError(error)),
