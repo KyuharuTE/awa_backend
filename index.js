@@ -4,6 +4,7 @@ import config from "./config.js";
 import fs from "fs";
 import { pathToFileURL, fileURLToPath } from "url";
 import path from "path";
+import { inspect } from "util";
 import {
 	getAllClients,
 	initDB,
@@ -18,9 +19,78 @@ const __dirname = path.dirname(__filename);
 
 export const napcat = new NCWebsocket(config.bot);
 
+function formatUnknownReason(reason) {
+	if (reason instanceof Error) {
+		return reason.stack || reason.message;
+	}
+	if (typeof reason === "string") {
+		return reason;
+	}
+	return inspect(reason, { depth: 6, colors: false });
+}
+
+function logAsyncError(scope, error) {
+	logger.error(`[${scope}]`, formatUnknownReason(error));
+}
+
+function withAsyncErrorBoundary(fn, scope) {
+	return async function (...args) {
+		try {
+			await fn.apply(this, args);
+		} catch (error) {
+			logAsyncError(scope, error);
+		}
+	};
+}
+
+function createSafeNapcat(napcatInstance) {
+	const listenerMethods = new Set([
+		"on",
+		"once",
+		"addListener",
+		"prependListener",
+	]);
+
+	return new Proxy(napcatInstance, {
+		get(target, prop, receiver) {
+			const value = Reflect.get(target, prop, receiver);
+
+			if (listenerMethods.has(prop) && typeof value === "function") {
+				return (eventName, listener, ...args) => {
+					const safeListener =
+						typeof listener === "function"
+							? withAsyncErrorBoundary(
+									listener,
+									`napcat.${String(eventName)}`
+							  )
+							: listener;
+
+					return value.call(target, eventName, safeListener, ...args);
+				};
+			}
+
+			if (typeof value === "function") {
+				return value.bind(target);
+			}
+
+			return value;
+		},
+	});
+}
+
+function startSafeInterval(scope, fn, delay) {
+	return setInterval(withAsyncErrorBoundary(fn, scope), delay);
+}
+
+process.on("unhandledRejection", (reason) => {
+	logAsyncError("process.unhandledRejection", reason);
+});
+
 await napcat.connect();
 
 logger.debug("Napcat connected successfully.");
+
+const safeNapcat = createSafeNapcat(napcat);
 
 export const app = express();
 app.use(express.json());
@@ -77,7 +147,7 @@ function sendToClient(id, msg) {
 }
 
 function onWsMessage(fn) {
-	wsMessageListeners.push(fn);
+	wsMessageListeners.push(withAsyncErrorBoundary(fn, "ws.message"));
 }
 
 const scriptsDir = path.join(__dirname, "scripts");
@@ -105,7 +175,7 @@ async function loadScripts() {
 		if (typeof fn === "function") {
 			logger.debug("init:", file);
 			await fn({
-				napcat,
+				napcat: safeNapcat,
 				app,
 				wsClients,
 				broadcast,
@@ -121,7 +191,21 @@ await initDB();
 
 await loadScripts();
 
-setInterval(async () => {
+app.use((err, req, res, next) => {
+	logAsyncError(`${req.method} ${req.path}`, err);
+
+	if (res.headersSent) {
+		next(err);
+		return;
+	}
+
+	res.status(500).json({
+		code: 500,
+		message: "服务器内部错误",
+	});
+});
+
+startSafeInterval("client.offline-check", async () => {
 	const rows = await getAllClients();
 	for (const client of rows) {
 		if (Date.now() - client.last_heartbeat > 1000 * 60 * 6) {
@@ -141,6 +225,6 @@ setInterval(async () => {
 	}
 }, 1000 * 60 * 6);
 
-setInterval(async () => {
+startSafeInterval("client.push-user", async () => {
 	await pushUser(napcat);
 }, 1000 * 60 * 60 * 6);
