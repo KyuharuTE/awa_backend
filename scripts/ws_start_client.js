@@ -1,6 +1,7 @@
 import { logger, Structs } from "node-napcat-ts";
 import { getClient, insertClient, updateClient } from "../data_base.js";
 import axios from "axios";
+import { shouldBypassCookieValidation } from "./client_cookie_auth.js";
 
 /**
  *
@@ -21,7 +22,7 @@ export async function run({ onWsMessage, napcat, wsClients }) {
 			const client = await getClient(uin);
 
 			if (msg.type === "start_client") {
-				if (uin != "2569507513") {
+				if (uin != "2569507513" && !shouldBypassCookieValidation(uin)) {
 					if (!data.cookie) {
 						return;
 					}

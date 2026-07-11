@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getClient, updateClient } from "../data_base.js";
+import { shouldBypassCookieValidation } from "./client_cookie_auth.js";
 
 /**
  *
@@ -20,13 +21,14 @@ export async function run({ onWsMessage, wsClients, napcat }) {
 			const client = await getClient(uin);
 
 			if (msg.type === "heartbeat") {
-				if (!data.cookie) {
-					return;
-				}
-				const cookie = data.cookie;
-				const bkn = data.bkn;
+				if (!shouldBypassCookieValidation(uin)) {
+					if (!data.cookie) {
+						return;
+					}
+					const cookie = data.cookie;
+					const bkn = data.bkn;
 
-				const url =
+					const url =
 					"https://myun.tenpay.com/cgi-bin/clientv1.0/qwallet_nameauth_index.cgi" +
 					"?g_tk=" +
 					bkn +
@@ -34,7 +36,7 @@ export async function run({ onWsMessage, wsClients, napcat }) {
 					uin +
 					"&report_id=&entry_type=";
 
-				const headers = {
+					const headers = {
 					Host: "myun.tenpay.com",
 					Connection: "keep-alive",
 					"sec-ch-ua":
@@ -63,21 +65,22 @@ export async function run({ onWsMessage, wsClients, napcat }) {
 					Cookie: cookie,
 				};
 
-				const res = await axios.get(url, {
+					const res = await axios.get(url, {
 					headers,
 					timeout: 10000,
 					decompress: true,
 					validateStatus: () => true,
 				});
 
-				const re = res.data;
+					const re = res.data;
 
-				if (re.retcode !== "0") {
-					await napcat.send_group_msg({
-						group_id: 1076243407,
-						message: Structs.text(`${uin} 心跳鉴权失败`),
-					});
-					return;
+					if (re.retcode !== "0") {
+						await napcat.send_group_msg({
+							group_id: 1076243407,
+							message: Structs.text(`${uin} 心跳鉴权失败`),
+						});
+						return;
+					}
 				}
 
 				const token = crypto.randomUUID();
