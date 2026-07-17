@@ -76,7 +76,7 @@ export async function updateClientWithoutToken(uin, last_heartbeat, offline) {
 			[last_heartbeat, offline, uin]
 		);
 	} catch (error) {
-		logger.error("updateClientWithoutToken error:", error);
+		logger.warn("updateClientWithoutToken error:", error);
 	}
 }
 

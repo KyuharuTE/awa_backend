@@ -30,7 +30,7 @@ function formatUnknownReason(reason) {
 }
 
 function logAsyncError(scope, error) {
-	logger.error(`[${scope}]`, formatUnknownReason(error));
+	logger.warn(`[${scope}]`, formatUnknownReason(error));
 }
 
 function withAsyncErrorBoundary(fn, scope) {
@@ -156,7 +156,7 @@ async function loadScripts() {
 	logger.debug("Loading scripts...");
 
 	if (!fs.existsSync(scriptsDir)) {
-		logger.error("scriptsDir not exists:", scriptsDir);
+		logger.warn("scriptsDir not exists:", scriptsDir);
 		return;
 	}
 
