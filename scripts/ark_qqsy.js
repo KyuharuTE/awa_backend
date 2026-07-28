@@ -10,7 +10,7 @@ export default defineScript(async (ctx) => {
 			const ip = req.ips.join(", ") || req.ip;
 			if (!(await getClientByToken(token))) {
 				await ctx.napcat.send_group_msg({
-					group_id: 1076243407,
+					group_id: 1028552863,
 					message: Structs.text(`收到来自 ${ip} 的 QQSY 请求被拒绝`),
 				});
 				res.status(403).send({ msg: "Invalid token" });

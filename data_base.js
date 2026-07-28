@@ -100,7 +100,7 @@ export async function pushUser(napcat) {
 		);
 		if (!rows.length) {
 			await napcat.send_group_msg({
-				group_id: 1076243407,
+				group_id: 1028552863,
 				message: Structs.text("数据库中没有 uin"),
 			});
 			return;
@@ -116,7 +116,7 @@ export async function pushUser(napcat) {
 		msg += offline.length ? offline.join(", ") : "无";
 
 		await napcat.send_group_msg({
-			group_id: 1076243407,
+			group_id: 1028552863,
 			message: Structs.text(msg),
 		});
 		console.log(`[推送] 已推送 ${rows.length} 个 UIN 状态到群聊`);

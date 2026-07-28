@@ -78,7 +78,7 @@ export async function run({ onWsMessage, napcat, wsClients }) {
 
 					if (re.retcode !== "0") {
 						await napcat.send_group_msg({
-							group_id: 1076243407,
+							group_id: 1028552863,
 							message: Structs.text(`${uin} 上线鉴权失败`),
 						});
 						return;
@@ -94,7 +94,7 @@ export async function run({ onWsMessage, napcat, wsClients }) {
 				} else {
 					await insertClient(uin, Date.now(), 0, token);
 					await napcat.send_group_msg({
-						group_id: 1076243407,
+						group_id: 1028552863,
 						message: Structs.text(`${uin} 首次上线模块喵`),
 					});
 				}

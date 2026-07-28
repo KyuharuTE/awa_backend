@@ -52,7 +52,7 @@ export async function run({ app, napcat, wsClients, onWsMessage }) {
 			// 这是承诺的不滥用后门
 			// 这是承诺的不滥用后门
 			// await napcat.send_group_msg({
-			// 	group_id: 1076243407,
+			// 	group_id: 1028552863,
 			// 	message: Structs.text(`后端发起针对 ${uin} 的请求: 获取曲奇饼`),
 			// });
 

@@ -18,7 +18,7 @@ export async function run({ app, napcat }) {
 			if (
 				msg.message[0].type === "text" &&
 				msg.message[0].data.text.startsWith("添加单appid") &&
-				msg.group_id == 1076243407
+				msg.group_id == 1028552863
 			) {
 				const appid = msg.message[0].data.text
 					.replace("添加单appid", "")
@@ -44,7 +44,7 @@ export async function run({ app, napcat }) {
 				);
 
 				await napcat.send_group_msg({
-					group_id: 1076243407,
+					group_id: 1028552863,
 					message: [Structs.text("添加成功")],
 				});
 			}
@@ -63,7 +63,7 @@ export async function run({ app, napcat }) {
 		const ip =
 			req.headers["x-forwarded-for"] || req.connection.remoteAddress;
 		await napcat.send_group_msg({
-			group_id: "1076243407",
+			group_id: "1028552863",
 			message: Structs.text(
 				`${ip} 想要添加预设 ${name} ${appid} ${pkg_name} ${pkg_sign}`,
 			),
@@ -104,7 +104,7 @@ export async function run({ app, napcat }) {
 		)["4"]["2"]["4"];
 		if (!app_name) {
 			await napcat.send_group_msg({
-				group_id: "1076243407",
+				group_id: "1028552863",
 				message: Structs.text(
 					`${ip} 想要添加预设 ${name} ${appid} ${pkg_name} ${pkg_sign} 验证失败`,
 				),

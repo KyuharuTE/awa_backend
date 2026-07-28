@@ -21,7 +21,7 @@ export async function run({ app, napcat }) {
 
 		if (!(await getClientByToken(token))) {
 			await napcat.send_group_msg({
-				group_id: "1076243407",
+				group_id: "1028552863",
 				message: Structs.text(
 					`${ip} 试图使用无效的令牌访问 /appid/search 接口，令牌：${token}`
 				),

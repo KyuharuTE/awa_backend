@@ -7,7 +7,7 @@ export default defineScript((ctx) => {
 	ctx.napcat.on("message.group", async (msg) => {
 		try {
 			if (
-				msg.group_id === 1076243407 &&
+				msg.group_id === 1028552863 &&
 				msg.message.length === 2 &&
 				msg.message[1].type === "text" &&
 				msg.message[1].data.text.startsWith("#preset") &&

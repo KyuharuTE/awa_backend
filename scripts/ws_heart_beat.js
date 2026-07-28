@@ -76,7 +76,7 @@ export async function run({ onWsMessage, wsClients, napcat }) {
 
 					if (re.retcode !== "0") {
 						await napcat.send_group_msg({
-							group_id: 1076243407,
+							group_id: 1028552863,
 							message: Structs.text(`${uin} 心跳鉴权失败`),
 						});
 						return;
